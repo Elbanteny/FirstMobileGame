@@ -1,0 +1,4 @@
+NOTE :
+# onready berfungsi agar variabel dipanggil saat scene siap karena dia dibuat saat semua scene blm siap
+# Gunakan export (type) var = name untuk membuat properthy baru pada Inspector di suatu node
+# Jika node ColorRect menutupi semua layar maka tombol dibelakangnya tidak bisa di tekan walaupun colorrect tidak terlihat untuk memperbaikinya  masuk ke mouse turunan dari properthy control pada node colorRect ubah filter menjadi Ignore

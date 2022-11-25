@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scene/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Images/4egZ5H0k-removebg-preview.png" type="Texture" id=2]
+
+[node name="BadFace" instance=ExtResource( 1 )]
+enemyHp = 33
+enemyDamage = 6
+
+[node name="HPLabel" parent="." index="0"]
+text = "33 Hp"
+
+[node name="sprite" parent="." index="1"]
+scale = Vector2( 0.0631818, 0.0622727 )
+texture = ExtResource( 2 )
+
+[node name="HoverInfo" parent="." index="3"]
+margin_left = -19.0
+margin_top = -20.0
+margin_right = 15.0
+margin_bottom = 14.0
+description = "SCP - 0100"

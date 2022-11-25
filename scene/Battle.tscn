@@ -1,0 +1,270 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://scene/Slime.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Images/Dungeon.png" type="Texture" id=3]
+[ext_resource path="res://scene/Battle.gd" type="Script" id=4]
+[ext_resource path="res://scene/PlayerStats.gd" type="Script" id=5]
+[ext_resource path="res://scene/StatsPanel.gd" type="Script" id=6]
+[ext_resource path="res://DefaultTheme.tres" type="Theme" id=7]
+[ext_resource path="res://scene/SwordActionButton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scene/HealActionButton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scene/Rat.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scene/GameOver.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scene/Ghost.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scene/BadFace.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scene/AngryFace.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/Sound/cactusdude - endgame.mp3" type="AudioStream" id=15]
+[ext_resource path="res://assets/Sound/mixkit-spooky-wind-metal-music-698.wav" type="AudioStream" id=16]
+[ext_resource path="res://assets/Sound/mixkit-sword-slash-swoosh-1476.wav" type="AudioStream" id=17]
+[ext_resource path="res://assets/Sound/mixkit-game-magical-potion-drink-2828.wav" type="AudioStream" id=18]
+[ext_resource path="res://assets/Sound/mixkit-magic-transition-sweep-presentation-2638.wav" type="AudioStream" id=19]
+
+[sub_resource type="Animation" id=1]
+resource_name = "FadeToNewRoom"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="Battle" type="Node"]
+script = ExtResource( 4 )
+enemies = [ ExtResource( 10 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
+
+[node name="Dungeon" type="Sprite" parent="."]
+position = Vector2( 45, 80 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+margin_right = 90.0
+margin_bottom = 50.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NextRoomButton" type="Button" parent="UI/CenterContainer"]
+visible = false
+margin_left = 6.0
+margin_top = 18.0
+margin_right = 83.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 50, 13 )
+text = "RUANGAN BERIKUTNYA"
+
+[node name="FadeSound" type="AudioStreamPlayer" parent="UI/CenterContainer/NextRoomButton"]
+stream = ExtResource( 19 )
+volume_db = 3.0
+pitch_scale = 1.5
+mix_target = 1
+
+[node name="StatsPanel" type="Panel" parent="UI"]
+margin_left = 3.0
+margin_top = 50.0
+margin_right = 87.0
+margin_bottom = 69.0
+script = ExtResource( 6 )
+
+[node name="StatsContainer" type="HBoxContainer" parent="UI/StatsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Hp" type="Label" parent="UI/StatsPanel/StatsContainer"]
+margin_top = 4.0
+margin_right = 25.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Hp
+50"
+align = 1
+
+[node name="Ap" type="Label" parent="UI/StatsPanel/StatsContainer"]
+margin_left = 29.0
+margin_top = 4.0
+margin_right = 54.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Ap
+3"
+align = 1
+
+[node name="Mp" type="Label" parent="UI/StatsPanel/StatsContainer"]
+margin_left = 58.0
+margin_top = 4.0
+margin_right = 84.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Mp
+20"
+align = 1
+
+[node name="TextBoxPanel" type="Panel" parent="UI"]
+margin_left = -2.0
+margin_top = 138.0
+margin_right = 92.0
+margin_bottom = 162.0
+
+[node name="TextBox" type="RichTextLabel" parent="UI/TextBoxPanel"]
+margin_left = 4.0
+margin_top = 2.0
+margin_right = 90.0
+margin_bottom = 22.0
+custom_constants/line_separation = 2
+text = "..."
+scroll_active = false
+
+[node name="battleActionButtons" type="GridContainer" parent="UI"]
+margin_left = 9.0
+margin_top = 73.0
+margin_right = 81.0
+margin_bottom = 136.0
+custom_constants/vseparation = 3
+custom_constants/hseparation = 8
+columns = 3
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SwordActionButton" parent="UI/battleActionButtons" instance=ExtResource( 8 )]
+text = "PEDANG"
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="UI/battleActionButtons/SwordActionButton"]
+stream = ExtResource( 17 )
+volume_db = 4.0
+mix_target = 2
+
+[node name="HealActionButton" parent="UI/battleActionButtons" instance=ExtResource( 9 )]
+margin_left = 40.0
+margin_right = 72.0
+
+[node name="HealSound" type="AudioStreamPlayer" parent="UI/battleActionButtons/HealActionButton"]
+stream = ExtResource( 18 )
+volume_db = 3.0
+
+[node name="EnemyPosition" type="Position2D" parent="."]
+position = Vector2( 46, 32 )
+
+[node name="Slime" parent="EnemyPosition" instance=ExtResource( 1 )]
+
+[node name="Fade" type="ColorRect" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeToNewRoom = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[node name="playerStats" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="GameOver" parent="playerStats" instance=ExtResource( 11 )]
+margin_left = 1.0
+margin_top = 50.0
+margin_right = 91.0
+margin_bottom = 90.0
+
+[node name="GameOverMusic" type="AudioStreamPlayer" parent="playerStats"]
+stream = ExtResource( 16 )
+mix_target = 1
+
+[node name="Backsound" type="AudioStreamPlayer" parent="playerStats"]
+stream = ExtResource( 15 )
+volume_db = -3.0
+autoplay = true
+mix_target = 1
+
+[node name="TutorialPopup" type="Popup" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+popup_exclusive = true
+
+[node name="Panel" type="Panel" parent="TutorialPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tutorial" type="RichTextLabel" parent="TutorialPopup"]
+margin_left = 4.0
+margin_top = 12.0
+margin_right = 86.0
+margin_bottom = 152.0
+custom_constants/line_separation = 3
+text = "-Ap : Attack point
+-mp : Mana Point
+-Hp : Health Point
+
+-Pedang : Memberikan 5 Damage pada musuh
+
+-Potion : Menambah 5 Hp
+
+-Misi : Bunuh Semua monster di Dungeon ini
+
+Developer : M Amiryan P"
+scroll_active = false
+
+[node name="TutorialText" type="RichTextLabel" parent="TutorialPopup"]
+margin_left = 29.0
+margin_top = 4.0
+margin_right = 62.0
+margin_bottom = 11.0
+text = "TUTORIAL"
+scroll_active = false
+
+[node name="Start Button" type="Button" parent="TutorialPopup"]
+margin_left = 33.0
+margin_top = 148.0
+margin_right = 59.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 26, 10 )
+mouse_filter = 1
+text = "MULAI"
+
+[connection signal="pressed" from="UI/CenterContainer/NextRoomButton" to="." method="_on_NextRoomButton_pressed"]
+[connection signal="ap_changed" from="playerStats" to="UI/StatsPanel" method="_on_PlayerStats_ap_changed"]
+[connection signal="hp_changed" from="playerStats" to="UI/StatsPanel" method="_on_PlayerStats_hp_changed"]
+[connection signal="mp_changed" from="playerStats" to="UI/StatsPanel" method="_on_PlayerStats_mp_changed"]
+[connection signal="pressed" from="TutorialPopup/Start Button" to="." method="_on_Start_Button_pressed"]

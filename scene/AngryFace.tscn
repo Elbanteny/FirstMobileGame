@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scene/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Images/avsM0pWb-removebg-preview.png" type="Texture" id=2]
+
+[node name="AngryFace" instance=ExtResource( 1 )]
+enemyHp = 43
+enemyDamage = 7
+
+[node name="HPLabel" parent="." index="0"]
+text = "43 Hp"
+
+[node name="sprite" parent="." index="1"]
+scale = Vector2( 0.133667, 0.12988 )
+texture = ExtResource( 2 )
+
+[node name="HoverInfo" parent="." index="3"]
+margin_right = 22.0
+margin_bottom = 18.0
+description = "Makhluk Dari Backroom ???"
